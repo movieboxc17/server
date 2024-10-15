@@ -1,0 +1,31 @@
+name: Run Python Scripts
+
+on:
+  push:
+    branches:
+      - main  # Adjust if your default branch is different
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Use the desired Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # If you have a requirements file
+
+      - name: Run scripts
+        run: |
+          for script in scripts/*.py; do
+            echo "Running $script"
+            python "$script"  # Adjust if you need specific arguments
+          done
